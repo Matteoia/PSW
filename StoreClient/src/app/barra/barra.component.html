@@ -1,0 +1,18 @@
+<mat-toolbar class="toolbar">
+    <span>Store Project</span>
+    <span class="example-spacer"></span>
+    <span *ngIf="identity.isLoggedIn">Benvenuto {{identity.userProfile?.email}}</span>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button *ngIf="showHome" class="material-icons" (click)="mostraHome()">home</button>
+    <button *ngIf="!showHome" class="material-icons" (click)="mostraCarrello()">shopping_cart</button>
+    &nbsp;&nbsp;&nbsp;
+    <div *ngIf="!identity.isLoggedIn">
+        <button  mat-icon-button (click)="login()">Log in</button>
+        &nbsp;
+        <button  mat-icon-button (click)="register()">Registrati</button>
+    </div>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <div *ngIf="identity.isLoggedIn">
+        <button  mat-icon-button (click)="logout()">Log out</button>
+    </div>
+</mat-toolbar>
