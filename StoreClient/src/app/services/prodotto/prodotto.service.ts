@@ -1,5 +1,5 @@
 import { AppModule } from '../../app.module';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -12,8 +12,10 @@ export class ProdottoService {
 
   constructor(private http: HttpClient) { }
 
-  public getProdotti(): Observable<prodotto[]> {
-    return this.http.get<prodotto[]>(this.apiServerUrl+"/prodotto/getAll");
+  public getProdotti(pn: number): Observable<prodotto[]> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("pageNumber",pn);
+    return this.http.get<prodotto[]>(this.apiServerUrl+"/prodotto/paged", {params: queryParams});
   }
 
   

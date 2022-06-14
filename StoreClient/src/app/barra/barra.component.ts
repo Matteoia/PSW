@@ -1,12 +1,13 @@
 import { KeycloakService } from 'keycloak-angular';
 import { KeycloakProfile, KeycloakLoginOptions } from 'keycloak-js';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, NgModule, Output } from '@angular/core';
 
 @Component({
   selector: 'app-barra',
   templateUrl: './barra.component.html',
   styleUrls: ['./barra.component.css']
 })
+
 export class BarraComponent {
   @Output() mostraC = new EventEmitter<boolean>();
   showHome: boolean = false;

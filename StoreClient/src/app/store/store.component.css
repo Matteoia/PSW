@@ -23,12 +23,14 @@
   body {
     overflow: scroll;
     background-color: #fff;
+    top: 0px;
   }
   
   .page-wrapper {
     overflow: auto;
     height: 200%;
     display: table;
+    margin-left: 7%;
   }
   
   .page-wrapper .page-inner {

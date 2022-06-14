@@ -8,7 +8,11 @@ import { ProdottoService } from '../services/prodotto/prodotto.service';
   styleUrls: ['./store.component.css'],
 })
 export class StoreComponent implements OnInit {
-  prodotti: prodotto[] = [];
+  pageN: number = 0;
+  private finite: boolean = false;
+  prodottiR1: prodotto[] = [];
+  prodottiR2: prodotto[] = [];
+  prodottiR3: prodotto[] = [];
   mostraProdotti: boolean = false;
   prodottiCarrello: prodotto[] = [];
   @Output() mostraC = new EventEmitter<prodotto[]>();
@@ -16,16 +20,52 @@ export class StoreComponent implements OnInit {
   constructor( private prodottoService: ProdottoService) { }
 
   public ngOnInit(){
-    this.getProdotti();
+    this.getProdotti(this.pageN);
   }
 
-  public getProdotti(){
-    this.prodottoService.getProdotti().subscribe(
-      (response: prodotto[]) => {
-        this.prodotti = response;
-        this.mostraProdotti = true;
+  public getProdotti(page: number){
+    var i : number = 0;
+    this.prodottoService.getProdotti(page).subscribe((result: prodotto[]) => {
+      var r1: number = result.length/3;
+     
+      if(result[0] != undefined){
+        this.prodottiR1 = [];
+        this.prodottiR2 = [];
+        this.prodottiR3 = [];
+        result.forEach((t: prodotto) => {
+          if( i<5){
+            this.prodottiR1.push(t);
+          }
+          if(i >= 5 && i <10){
+            this.prodottiR2.push(t);
+          }
+          if(i >= 10){
+            this.prodottiR3.push(t);
+          }       
+          i++; 
+        });
+        this.finite = false;
+      } else{
+        this.finite = true;
+        this.pageN--;
       }
-    );
+     
+    });
+    this.mostraProdotti = true;
+  }
+
+  public nextPage(){
+    if(!this.finite){  
+      this.pageN++;
+      this.getProdotti(this.pageN);
+    }
+  }
+
+  public prevPage(){
+    if(this.pageN > 0){
+      this.pageN--;
+      this.getProdotti(this.pageN);
+    }
   }
 
   public addToCart(prodotto: prodotto){

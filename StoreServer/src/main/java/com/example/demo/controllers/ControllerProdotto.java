@@ -35,7 +35,7 @@ public class ControllerProdotto {
 
 
     @GetMapping("/paged")
-    public ResponseEntity getAll(@RequestParam(value = "pageNumber", defaultValue = "1") int pageNumber, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize, @RequestParam(value = "sortBy", defaultValue = "id") String sortBy) {
+    public ResponseEntity getAll(@RequestParam(value = "pageNumber", defaultValue = "0") int pageNumber, @RequestParam(value = "pageSize", defaultValue = "15") int pageSize, @RequestParam(value = "sortBy", defaultValue = "id") String sortBy) {
         List<Prodotto> result = productService.getAll(pageNumber, pageSize, sortBy);
         if ( result.size() <= 0 ) {
             return new ResponseEntity<>(new MessaggioRisposta("No results!"), HttpStatus.OK);

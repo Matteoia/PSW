@@ -2,7 +2,7 @@ import { LineaOrdineService } from './../services/lineaOrdine/linea-ordine.servi
 import { lineaOrdine } from './../services/lineaOrdine/lineaOrdine';
 import { OrdineService } from './../services/ordine/ordine.service';
 import { ordine } from './../services/ordine/ordine';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, NgModule, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { KeycloakService } from 'keycloak-angular';
 import { KeycloakProfile } from 'keycloak-js';
@@ -53,6 +53,7 @@ export class CarrelloComponent implements OnInit{
       var o: ordine = new ordine(c, d, lo);
       console.log(o);
       this.ordineService.crea(o);
+      this.snackBar.open("Ordine registrato con successo", "OK");
     }
     
   }

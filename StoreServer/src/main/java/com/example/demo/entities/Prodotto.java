@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import javax.persistence.*;
+
+
 import java.util.List;
 
 @Getter
@@ -14,7 +16,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Entity
 @Table(name="prodotto")
-public class Prodotto {
+public class Prodotto  {
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -40,4 +42,5 @@ public class Prodotto {
     @ToString.Exclude
     @JsonIgnore
     private List<LineaOrdine> lineeOrdini;
+
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import { prodotto } from '../services/prodotto/prodotto';
 import { StoreComponent } from '../store/store.component';
 
