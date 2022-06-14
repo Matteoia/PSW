@@ -21,7 +21,7 @@
   }
   
   body {
-    overflow: auto;
+    overflow: scroll;
     background-color: #fff;
   }
   

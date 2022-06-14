@@ -1,6 +1,7 @@
 <mat-toolbar class="toolbar">
     <span>Store Project</span>
     <span class="example-spacer"></span>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <span *ngIf="isLoggedIn">Benvenuto {{keycloak.getUsername()}}</span>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <button *ngIf="showHome" class="material-icons" (click)="mostraHome()">home</button>
@@ -13,6 +14,8 @@
     </div>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <div *ngIf="isLoggedIn">
+        <button mat-icon-button routerLink="ordini">Ordini</button>
+        &nbsp;&nbsp;&nbsp;
         <button  mat-icon-button (click)="logout()">Log out</button>
     </div>
 </mat-toolbar>

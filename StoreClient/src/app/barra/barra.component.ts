@@ -46,4 +46,5 @@ export class BarraComponent {
     this.mostraC.emit(false);
     this.showHome = false;
   }
+
 }

@@ -1,0 +1,8 @@
+<h1>Ordini:</h1>
+<div *ngFor="let lo of lineeOrdini">
+    <h2>Ordine:</h2>
+    <div *ngFor="let tmp of lo">  
+        {{tmp.prodotto.nome}}
+        {{tmp.qta}}
+    </div>
+</div>

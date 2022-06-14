@@ -2,6 +2,7 @@ package com.example.demo.controllers;
 
 
 import com.example.demo.entities.Cliente;
+import com.example.demo.entities.LineaOrdine;
 import com.example.demo.entities.Ordine;
 import com.example.demo.repositories.RepositoryCliente;
 import com.example.demo.services.ServiceCliente;
@@ -25,7 +26,7 @@ import java.util.List;
 @RequestMapping("/ordine")
 public class ControllerOrdine {
     @Autowired
-    private ServiceOrdine purchasingService;
+    private ServiceOrdine serviceOrdine;
 
     @Autowired
     private RepositoryCliente repoCliente;
@@ -40,15 +41,27 @@ public class ControllerOrdine {
             long id = repoCliente.findIdByEmail(ordine.getCliente().getEmail());
             ordine.getCliente().setId(id);
             serviceCliente.addOrdine(ordine);
-            return new ResponseEntity<>(purchasingService.aggiungiOrdine(ordine), HttpStatus.OK);
+            return new ResponseEntity<>(serviceOrdine.aggiungiOrdine(ordine), HttpStatus.OK);
         } catch (QuantitaNonDisponibileException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Quantità non disponibile!", e); // realmente il messaggio dovrebbe essrere più esplicativo (es. specificare il prodotto di cui non vi è disponibilità)
         }
     }
+
+    @GetMapping("/getByEmail/{email}")
+    public List<Ordine> getByEmail(@PathVariable String email){
+        return serviceOrdine.getByEmail(email);
+    }
+
+    @GetMapping("/lineeOrdine/{id}")
+    public List<LineaOrdine> getLineeOrdine(@PathVariable long id){
+        Ordine o = serviceOrdine.getById(id);
+        return o.getLineeOrdini();
+    }
+
     @GetMapping("/{cliente}")
     public List<Ordine> getPurchases(@RequestBody @Valid Cliente user) {
         try {
-            return purchasingService.getByCliente(user);
+            return serviceOrdine.getByCliente(user);
         } catch (UtenteNonTrovatoException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Utente non trovato!", e);
         }
@@ -56,7 +69,7 @@ public class ControllerOrdine {
     @GetMapping("/{user}/{startDate}/{endDate}")
     public ResponseEntity getPurchasesInPeriod(@Valid @PathVariable("user") Cliente user, @PathVariable("startDate") @DateTimeFormat(pattern = "dd-MM-yyyy") Date start, @PathVariable("endDate") @DateTimeFormat(pattern = "dd-MM-yyyy") Date end) {
         try {
-            List<Ordine> result = purchasingService.getByClienteInPeriodo(user, start, end);
+            List<Ordine> result = serviceOrdine.getByClienteInPeriodo(user, start, end);
             if ( result.size() <= 0 ) {
                 return new ResponseEntity<>(new MessaggioRisposta("Nessun risultato!"), HttpStatus.OK);
             }

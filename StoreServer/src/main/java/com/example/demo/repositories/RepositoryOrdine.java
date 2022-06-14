@@ -17,4 +17,7 @@ public interface RepositoryOrdine extends JpaRepository<Ordine, Long> {
     List<Ordine> findByData(Date data);
     @Query("SELECT o FROM Ordine o WHERE o.data >= :dataI AND o.data <= :dataF AND o.cliente = :c")
     List<Ordine> findByClienteInPeriodo(Date dataI, Date dataF, Cliente c);
+
+    @Query("SELECT o FROM Ordine o, Cliente c WHERE c.email=:email AND o.cliente=c")
+    List<Ordine> findByEmail(String email);
 }

@@ -36,5 +36,6 @@ public class Cliente {
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.MERGE)
     @JsonIgnore
+    @ToString.Exclude
     private List<Ordine> ordini;
 }

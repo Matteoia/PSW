@@ -15,16 +15,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatFormFieldModule} from '@angular/material/form-field'; 
 
 import { CarrelloComponent } from './carrello/carrello.component';
 import { BarraComponent } from './barra/barra.component';
 import { StoreComponent } from './store/store.component';
 import { RegOKComponent } from './reg-ok/reg-ok.component';
 import { HomeComponent } from './home/home.component';
+import { OrdiniComponent } from './ordini/ordini.component';
 
 
 @NgModule({
-  declarations: [AppComponent, StoreComponent, BarraComponent, CarrelloComponent, RegOKComponent, HomeComponent],
+  declarations: [AppComponent, StoreComponent, BarraComponent, CarrelloComponent, RegOKComponent, HomeComponent, OrdiniComponent],
   imports: [
     AppRoutingModule,
     BrowserModule,
@@ -34,7 +36,8 @@ import { HomeComponent } from './home/home.component';
     MatButtonModule,
     MatIconModule,
     HttpClientModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatFormFieldModule
   ],
   providers: [ ProdottoService, OrdineService, ClienteService, KeycloakService],
   bootstrap: [AppComponent]

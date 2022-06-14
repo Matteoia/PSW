@@ -49,6 +49,11 @@ public class ServiceOrdine {
     }
 
     @Transactional(readOnly = true)
+    public List<Ordine> getByEmail(String email){
+        return repoOrdine.findByEmail(email);
+    }
+
+    @Transactional(readOnly = true)
     public List<Ordine> getAll() {
         return repoOrdine.findAll();
     }
@@ -75,5 +80,10 @@ public class ServiceOrdine {
     @Transactional(readOnly = true)
     public List<Ordine> getByData(Date d){
         return repoOrdine.findByData(d);
+    }
+
+    @Transactional(readOnly = true)
+    public Ordine getById(long id) {
+        return repoOrdine.findById(id);
     }
 }

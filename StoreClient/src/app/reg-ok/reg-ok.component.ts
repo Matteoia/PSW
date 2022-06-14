@@ -2,9 +2,6 @@ import { KeycloakService } from 'keycloak-angular';
 import { KeycloakProfile } from 'keycloak-js';
 import { Component, OnInit } from '@angular/core';
 import { ClienteService } from '../services/cliente/cliente.service';
-import { cliente } from '../services/cliente/cliente';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 
 
 @Component({

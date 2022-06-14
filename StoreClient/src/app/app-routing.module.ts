@@ -1,3 +1,4 @@
+import { OrdiniComponent } from './ordini/ordini.component';
 import { HomeComponent } from './home/home.component';
 import { RegOKComponent } from './reg-ok/reg-ok.component';
 import { AppComponent } from './app.component';
@@ -7,7 +8,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 const routes: Routes = [
   {path: "", component: HomeComponent},
-  {path: "reg-ok", component: RegOKComponent}
+  {path: "reg-ok", component: RegOKComponent},
+  {path: "ordini", component: OrdiniComponent}
 ];
 
 @NgModule({
