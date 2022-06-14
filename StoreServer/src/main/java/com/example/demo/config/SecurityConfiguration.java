@@ -23,7 +23,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/check/simple").permitAll()
                 .antMatchers("/cliente/**").permitAll()
-                .antMatchers("/prodotto/getAll").permitAll()
+                .antMatchers("/prodotto/**").permitAll()
                 .antMatchers("/ordine/**").permitAll()
                 .anyRequest().authenticated().and().oauth2ResourceServer().jwt().jwtAuthenticationConverter(new JwtAuthenticationConverter());
     }

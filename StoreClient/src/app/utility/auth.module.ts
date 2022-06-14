@@ -7,10 +7,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
   keycloak.init({
     shouldAddToken: (request) => {
       const { method, url } = request;
-      console.log(method.toUpperCase());
       const isGetRequest = 'GET' === method.toUpperCase();
-
-      return !(isGetRequest);
+      //const isPOSTRequest = 'POST' === method.toUpperCase();
+      return !(isGetRequest );
     },
     config: {
       url: 'http://localhost:8080',

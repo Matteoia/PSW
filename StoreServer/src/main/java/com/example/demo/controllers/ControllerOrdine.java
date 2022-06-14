@@ -3,6 +3,8 @@ package com.example.demo.controllers;
 
 import com.example.demo.entities.Cliente;
 import com.example.demo.entities.Ordine;
+import com.example.demo.repositories.RepositoryCliente;
+import com.example.demo.services.ServiceCliente;
 import com.example.demo.services.ServiceOrdine;
 import com.example.demo.support.MessaggioRisposta;
 import com.example.demo.support.exceptions.IntervalloDataErratoException;
@@ -25,17 +27,24 @@ public class ControllerOrdine {
     @Autowired
     private ServiceOrdine purchasingService;
 
+    @Autowired
+    private RepositoryCliente repoCliente;
+
+    @Autowired
+    private ServiceCliente serviceCliente;
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.OK)
-    public ResponseEntity create(@RequestBody @Valid Ordine purchase) { // è buona prassi ritornare l'oggetto inserito
+    public ResponseEntity create(@RequestBody @Valid Ordine ordine) { // è buona prassi ritornare l'oggetto inserito
         try {
-            return new ResponseEntity<>(purchasingService.aggiungiOrdine(purchase), HttpStatus.OK);
+            long id = repoCliente.findIdByEmail(ordine.getCliente().getEmail());
+            ordine.getCliente().setId(id);
+            serviceCliente.addOrdine(ordine);
+            return new ResponseEntity<>(purchasingService.aggiungiOrdine(ordine), HttpStatus.OK);
         } catch (QuantitaNonDisponibileException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Quantità non disponibile!", e); // realmente il messaggio dovrebbe essrere più esplicativo (es. specificare il prodotto di cui non vi è disponibilità)
         }
     }
-
     @GetMapping("/{cliente}")
     public List<Ordine> getPurchases(@RequestBody @Valid Cliente user) {
         try {
@@ -44,7 +53,6 @@ public class ControllerOrdine {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Utente non trovato!", e);
         }
     }
-
     @GetMapping("/{user}/{startDate}/{endDate}")
     public ResponseEntity getPurchasesInPeriod(@Valid @PathVariable("user") Cliente user, @PathVariable("startDate") @DateTimeFormat(pattern = "dd-MM-yyyy") Date start, @PathVariable("endDate") @DateTimeFormat(pattern = "dd-MM-yyyy") Date end) {
         try {
@@ -59,6 +67,4 @@ public class ControllerOrdine {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La data di inizio deve essere precendete a quella di fine!!", e);
         }
     }
-
-
 }

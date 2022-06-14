@@ -1,7 +1,11 @@
-import { IdentityManagerService } from './../utility/identity-manager.service';
+import { KeycloakService } from 'keycloak-angular';
 import { KeycloakProfile } from 'keycloak-js';
 import { Component, OnInit } from '@angular/core';
-import { KeycloakService } from 'keycloak-angular';
+import { ClienteService } from '../services/cliente/cliente.service';
+import { cliente } from '../services/cliente/cliente';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-reg-ok',
@@ -9,12 +13,18 @@ import { KeycloakService } from 'keycloak-angular';
   styleUrls: ['./reg-ok.component.css']
 })
 export class RegOKComponent implements OnInit {
-  identity: IdentityManagerService
-
-  constructor() {
-    this.identity = IdentityManagerService.getInstance();
+  public isLoggedIn = false;
+  public userProfile: KeycloakProfile | null = null;
+  
+  public constructor(private cliente: ClienteService, public keycloak: KeycloakService) {
   }
-
-  ngOnInit() { }
+  
+  public async ngOnInit() {
+    this.isLoggedIn = await this.keycloak.isLoggedIn();
+    if (this.isLoggedIn) {
+      this.userProfile = await this.keycloak.loadUserProfile();
+    }
+    this.cliente.crea(this.keycloak);  
+  }
 
 }

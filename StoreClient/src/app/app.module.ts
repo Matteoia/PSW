@@ -1,4 +1,4 @@
-import { IdentityManagerService } from './utility/identity-manager.service';
+
 import { KeycloakService } from 'keycloak-angular';
 import { ClienteService } from './services/cliente/cliente.service';
 import { OrdineService } from './services/ordine/ordine.service';
@@ -14,6 +14,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { CarrelloComponent } from './carrello/carrello.component';
 import { BarraComponent } from './barra/barra.component';
@@ -33,6 +34,7 @@ import { HomeComponent } from './home/home.component';
     MatButtonModule,
     MatIconModule,
     HttpClientModule,
+    MatSnackBarModule
   ],
   providers: [ ProdottoService, OrdineService, ClienteService, KeycloakService],
   bootstrap: [AppComponent]

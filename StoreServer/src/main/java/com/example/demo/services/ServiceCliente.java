@@ -1,6 +1,8 @@
 package com.example.demo.services;
 
+import ch.qos.logback.core.net.server.Client;
 import com.example.demo.entities.Cliente;
+import com.example.demo.entities.Ordine;
 import com.example.demo.repositories.RepositoryCliente;
 import com.example.demo.support.exceptions.MailEsistenteException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,14 @@ public class ServiceCliente {
 
     @Transactional
     public Cliente registraCliente(Cliente c) throws MailEsistenteException {
-        if(repoCliente.findByEmail(c.getEmail()).size()>0)
+        if(repoCliente.findByEmail(c.getEmail()) != null)
             throw new MailEsistenteException();
         return repoCliente.save(c);
+    }
+
+    @Transactional(readOnly = true)
+    public void addOrdine(Ordine ordine){
+        //Cliente c = repoCliente.findById(ordine.getCliente().getId());
     }
 
     @Transactional(readOnly = true)
@@ -37,7 +44,7 @@ public class ServiceCliente {
     }
 
     @Transactional(readOnly = true)
-    public List<Cliente> getClienteByEmail(String email){
+    public Cliente getClienteByEmail(String email){
         return repoCliente.findByEmail(email);
     }
 

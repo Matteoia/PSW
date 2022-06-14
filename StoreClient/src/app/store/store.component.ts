@@ -29,12 +29,10 @@ export class StoreComponent implements OnInit {
   }
 
   public addToCart(prodotto: prodotto){
-    console.log(this.prodottiCarrello);
     this.prodottiCarrello.push(prodotto);
   }
 
   public mostraCarrello(){
-    console.log("Funzione chiamata dal parent")
     this.mostraC.emit(this.prodottiCarrello);
   }
 }

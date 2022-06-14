@@ -1,6 +1,5 @@
-import { KeycloakLoginOptions } from 'keycloak-js';
-import { IdentityManagerService } from '../utility/identity-manager.service';
-import { ClienteService } from '../services/cliente/cliente.service';
+import { KeycloakService } from 'keycloak-angular';
+import { KeycloakProfile, KeycloakLoginOptions } from 'keycloak-js';
 import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
@@ -11,28 +10,31 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class BarraComponent {
   @Output() mostraC = new EventEmitter<boolean>();
   showHome: boolean = false;
-  identity: IdentityManagerService;
-
-  constructor(private clienteService: ClienteService) {
-    this.identity = IdentityManagerService.getInstance();
-  }
-
-  public ngOnInit() {
-   // this.identity.ngOnInit();
+  public isLoggedIn = false;
+  public userProfile: KeycloakProfile | null = null;
+  
+  public constructor(public keycloak: KeycloakService) {}
+  
+  public async ngOnInit() {
+    this.isLoggedIn = await this.keycloak.isLoggedIn();
+    if (this.isLoggedIn) {
+      this.userProfile = await this.keycloak.loadUserProfile();
+    }
   }
 
   public login() {
-    const redirect: KeycloakLoginOptions = {redirectUri: 'http://localhost:4200/reg-ok'};
-    this.identity.login(redirect);
+    this.keycloak.login();
   }
 
   public logout() {
-    this.identity.logout();
+    this.keycloak.logout();
   }
 
   public register(){
-    const redirect: KeycloakLoginOptions = {redirectUri: 'http://localhost:4200/reg-ok'};
-    this.identity.register(redirect);
+    const redirect: KeycloakLoginOptions = {
+      redirectUri: 'http://localhost:4200/reg-ok'
+    }
+    this.keycloak.register(redirect);
   }
 
   public mostraCarrello(){

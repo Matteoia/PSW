@@ -34,7 +34,7 @@ public class ServiceOrdine {
         Ordine result = repoOrdine.save(ordine);
         for ( LineaOrdine lo : result.getLineeOrdini() ) {
             lo.setOrdine(result);
-            LineaOrdine justAdded = repoLineaOrdine.save(lo);
+            LineaOrdine justAdded = repoLineaOrdine.saveAndFlush(lo);
             entityManager.refresh(justAdded);
             Prodotto product = justAdded.getProdotto();
             int newQuantity = product.getQta() - lo.getQta();

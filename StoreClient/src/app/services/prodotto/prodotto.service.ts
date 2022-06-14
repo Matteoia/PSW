@@ -15,4 +15,6 @@ export class ProdottoService {
   public getProdotti(): Observable<prodotto[]> {
     return this.http.get<prodotto[]>(this.apiServerUrl+"/prodotto/getAll");
   }
+
+  
 }

@@ -1,5 +1,6 @@
 package com.example.demo.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,6 +19,7 @@ import java.util.List;
 public class Ordine {
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private long id;
 
     @ManyToOne

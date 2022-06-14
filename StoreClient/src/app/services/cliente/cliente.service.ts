@@ -1,26 +1,24 @@
-import { IdentityManagerService } from './../../utility/identity-manager.service';
+import { Observable } from 'rxjs';
 import { KeycloakProfile } from 'keycloak-js';
 import { Injectable } from '@angular/core';
 import { cliente } from './cliente';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { KeycloakService } from 'keycloak-angular';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class ClienteService {
-  private apiServerUrl = environment.apiBaseUrl;
-  private cliente: cliente = new cliente();
- 
-  constructor(private http: HttpClient, identity: IdentityManagerService) { }
+  private apiServerUrl = environment.apiBaseUrl; 
 
-  crea(userProfile: KeycloakProfile){
-    console.log(userProfile);
-    this.cliente.setNome("");
-    this.cliente.setCognome(userProfile.lastName);
-    this.cliente.setEmail(userProfile.email);
-    console.log("invio l'utente "+cliente);
-    this.http.post<any>(this.apiServerUrl+"/cliente", this.cliente);
+  constructor(private http: HttpClient) { }
+
+  async crea(keycloak: KeycloakService){
+    const userProfile: KeycloakProfile = await keycloak.loadUserProfile();
+    var c : cliente = new cliente(userProfile);
+    this.http.post<cliente>(this.apiServerUrl+"/cliente", c).subscribe();
   }
+
 }

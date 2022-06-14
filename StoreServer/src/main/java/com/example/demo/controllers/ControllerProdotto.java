@@ -19,7 +19,7 @@ public class ControllerProdotto {
     private ServiceProdotto productService;
 
     @PostMapping
-    public ResponseEntity create(@RequestBody @Valid Prodotto product) {
+    public ResponseEntity<MessaggioRisposta> create(@RequestBody @Valid Prodotto product) {
         try {
             productService.addProdotto(product);
         } catch (ProdottoEsistenteException e) {
@@ -28,14 +28,9 @@ public class ControllerProdotto {
         return new ResponseEntity<>(new MessaggioRisposta("Aggiunto con successo!"), HttpStatus.OK);
     }
 
-    @PostMapping("/ordine")
-    public void creaOrdine(Prodotto[] prodotti){
-
-    }
-
     @GetMapping("/getAll")
-    public ResponseEntity mostraTutti(){
-        return new ResponseEntity(productService.getAll(), HttpStatus.OK);
+    public ResponseEntity<List<Prodotto>> mostraTutti(){
+        return new ResponseEntity<List<Prodotto>>(productService.getAll(), HttpStatus.OK);
     }
 
 
@@ -49,8 +44,8 @@ public class ControllerProdotto {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getById(@PathVariable long id){
-        return new ResponseEntity(productService.getById(id), HttpStatus.OK);
+    public ResponseEntity<Prodotto> getById(@PathVariable long id){
+        return new ResponseEntity<>(productService.getById(id), HttpStatus.OK);
     }
 
     @GetMapping("/search/by_name")
@@ -61,6 +56,4 @@ public class ControllerProdotto {
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
-
 }
